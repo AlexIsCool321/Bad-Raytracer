@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Windows.h>
+#include <Windows.h> //all ready failed
 #include <iostream>
 #include <cmath>
 
 namespace BadRaytracer {
 
-	HWND myconsole = GetConsoleWindow();
+	HWND myconsole = GetConsoleWindow();//google
 	HDC mydc = GetDC(myconsole);
 
 	int screenX = 250;
@@ -14,13 +14,15 @@ namespace BadRaytracer {
 
 	bool running = true;
 
+	int frame = 0;
+
 	class Ray {
 
 	public:
 
 		float ox, oy, oz, dx, dy, dz;
 
-		bool SphereIntersection(float sx, float sy, float sz, float r) {
+		bool SphereIntersection(float sx, float sy, float sz, float r) { // i <3 google
 			float a = dx * dx + dy * dy + dz * dz;
 			float b = 2 * (ox * dx + oy * dy + oz * dz - sx * dx - sy * dy - sz * dz);
 			float c = ox * ox + oy * oy + oz * oz - sx * sx - sy * sy - sz * sz + r * r;
@@ -40,7 +42,7 @@ namespace BadRaytracer {
 
 	void Start() {
 
-		//idk dont really need it but like :D
+		//i don't really need it but like :D
 
 	}
 
@@ -50,19 +52,19 @@ namespace BadRaytracer {
 			
 			for (int x = 0; x < screenX; x = x + 1) {
 				
-				Ray r;
+				Ray ray;
 	
-				r.ox = x - (screenX / 2);
-				r.oy = y - (screenY / 2);
-				r.oz = 0;
+				ray.ox = x - (screenX / 2);
+				ray.oy = y - (screenY / 2);
+				ray.oz = 0;
 
-				r.dx = 0;
-				r.dy = 0;
-				r.dz = -1;
+				ray.dx = 0;
+				ray.dy = 0;
+				ray.dz = -1;
 
-				if (r.SphereIntersection(0, 0, -6, 5)) {
+				if (ray.SphereIntersection(0, 0, -6, 5)) {
 
-					SetPixel(mydc, x, y, RGB(255, 255, 255));
+					SetPixel(mydc, x, y, RGB(0, 255, 0));
 
 				}
 				else {
@@ -70,10 +72,11 @@ namespace BadRaytracer {
 					SetPixel(mydc, x, y, RGB(0, 0, 0));
 
 				}
-				
 			}
-			
 		}
+
+		frame += 1;
+
 	}
 
 	void End() {
@@ -82,5 +85,4 @@ namespace BadRaytracer {
 		std::cin.ignore();
 
 	}
-
 }
